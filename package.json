@@ -25,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/victorratts13/axios-fetch-request/issues"
   },
-  "homepage": "https://github.com/victorratts13/axios-fetch-request#readme"
+  "homepage": "https://github.com/victorratts13/axios-fetch-request#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "axios-cookiejar-support": "^1.0.1",
+    "fetch": "^1.1.0",
+    "tough-cookie": "^4.0.0"
+  }
 }
