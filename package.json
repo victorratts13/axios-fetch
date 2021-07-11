@@ -1,0 +1,29 @@
+{
+  "name": "axios-fetch-request",
+  "version": "1.0.0",
+  "description": "axios fetch implementation for http/2 request",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorratts13/axios-fetch-request.git"
+  },
+  "keywords": [
+    "axios",
+    "fetch",
+    "request",
+    "http/2",
+    "https/2",
+    "http-2",
+    "https-2"
+  ],
+  "author": "ratts13",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/victorratts13/axios-fetch-request/issues"
+  },
+  "homepage": "https://github.com/victorratts13/axios-fetch-request#readme"
+}
