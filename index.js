@@ -1,8 +1,9 @@
-const axios = require('axios').default;
-const fetchData = require('fetch').fetchUrl;
-const { isJson } = require('./isJson')
-const axiosCookieSuport = require("axios-cookiejar-support").default;
-const tough = require("tough-cookie");
+import axios from 'axios';
+import { wrapper } from 'axios-cookiejar-support';
+import { CookieJar } from 'tough-cookie';
+import fetchData from 'fetch';
+import isJson from './isJson.js';
+
 var headers = {
     'accept': '*/*',
     'accept-encoding': 'gzip, deflate, br',
@@ -15,24 +16,30 @@ var headers = {
     'sec-fetch-site': 'same-site',
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'
 };
-axiosCookieSuport(axios);
-const cookieJar = new tough.CookieJar();
-let apiCookie = { withCredentials: true, jar: cookieJar };
 
-class fetchAxios{
+var ftData = fetchData.fetchUrl;
+const cookieJar = new CookieJar();
+let apiCookie = {
+    withCredentials: true,
+    jar: cookieJar
+};
+
+wrapper(axios.create(apiCookie));
+
+class fetchAxios {
     constructor(axiosConfigData = {
         proxy: false,
         headers: headers,
         withCredentials: true,
         jar: cookieJar
-    }){
+    }) {
         this.axiosConfig = axiosConfigData || axiosConfig;
     }
 
-    cookie(withCredentials = false){
-        if(withCredentials){
+    cookie(withCredentials = false) {
+        if (withCredentials) {
             return apiCookie;
-        }else{
+        } else {
             return {
                 session: false,
                 auth: apiCookie
@@ -40,20 +47,20 @@ class fetchAxios{
         }
     }
 
-    get(url, body, options){
+    get(url = '', body = false, options = false) {
         return new Promise((resolve, reject) => {
-            fetchData(url, {
+            ftData(url, {
                 method: 'GET',
                 headers: options.headers || this.axiosConfig.headers,
                 cache: options.cache || 'default',
                 payload: body || false
             }, (err, meta, body) => {
-                if(err){
+                if (err) {
                     return reject(err)
-                }else{
-                    if(isJson(body.toString())){
+                } else {
+                    if (isJson(body.toString())) {
                         return resolve(JSON.parse(body.toString()))
-                    }else{
+                    } else {
                         return resolve(body.toString())
                     }
                 }
@@ -61,20 +68,20 @@ class fetchAxios{
         })
     }
 
-    post(url, body, options){
+    post(url = '', body = false, options = false) {
         return new Promise((resolve, reject) => {
-            fetchData(url, {
+            ftData(url, {
                 method: 'POST',
                 headers: options.headers || this.axiosConfig.headers,
                 cache: options.cache || 'default',
                 payload: body || false
             }, (err, meta, body) => {
-                if(err){
+                if (err) {
                     return reject(err)
-                }else{
-                    if(isJson(body.toString())){
+                } else {
+                    if (isJson(body.toString())) {
                         return resolve(JSON.parse(body.toString()))
-                    }else{
+                    } else {
                         return resolve(body.toString())
                     }
                 }
@@ -83,4 +90,4 @@ class fetchAxios{
     }
 }
 
-module.exports = fetchAxios
+export default fetchAxios;
